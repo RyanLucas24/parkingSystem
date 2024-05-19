@@ -5,8 +5,6 @@ import com.example.parkingsystem.domain.usecases.utils.UnavailableParkingSpaceRe
 public class Parking {
     private int availableStandardParkingSpace;
     private int availableMonthlyParkingSpace;
-    private int occupiedStandardParkingSpace;
-    private int occupiedMonthlyParkingSpace;
     private final int parkingSpace;
     private int standardParkingSpace;
     private int monthlyParkingSpace;
@@ -15,36 +13,30 @@ public class Parking {
         this.parkingSpace = parkingSpace;
         standardParkingSpace = parkingSpace;
         availableStandardParkingSpace = parkingSpace;
-        occupiedStandardParkingSpace = 0;
         monthlyParkingSpace = 0;
         availableMonthlyParkingSpace = 0;
-        occupiedMonthlyParkingSpace = 0;
     }
 
     public void occupyAStandardParkingSpace() {
         if (hasAvailableStandardParkingSpace()) {
             availableStandardParkingSpace -= 1;
-            occupiedStandardParkingSpace += 1;
-        } else throw new UnavailableParkingSpaceRequestException("Vaga padrão indisponível !!");
+        } else throw new UnavailableParkingSpaceRequestException("Vaga padrão indisponível!!");
     }
 
     public void occupyAMonthlyParkingSpace() {
         if (hasAvailableMonthlyParkingSpace()) {
             availableMonthlyParkingSpace -= 1;
-            occupiedMonthlyParkingSpace += 1;
-        } else throw new UnavailableParkingSpaceRequestException("Vaga mensal indisponível !!");}
+        } else throw new UnavailableParkingSpaceRequestException("Vaga mensal indisponível!!");}
 
     public void liberateAStandardParkingSpace() {
         if (hasAnOccupiedStandardParkingSpace()) {
             availableStandardParkingSpace += 1;
-            occupiedStandardParkingSpace -= 1;
         } else throw new UnavailableParkingSpaceRequestException("Total de vagas padrão liberadas alcançado!!");
     }
 
     public void liberateAMonthlyParkingSpace() {
         if (hasAnOccupiedMonthlyParkingSpace()) {
             availableMonthlyParkingSpace += 1;
-            occupiedMonthlyParkingSpace -= 1;
         } else throw new UnavailableParkingSpaceRequestException("Total de vagas mensais liberadas alcançado!!");
     }
 
@@ -73,7 +65,7 @@ public class Parking {
     }
 
     public int getUnavailableStandardParkingSpace() {
-        return occupiedStandardParkingSpace;
+        return standardParkingSpace - availableStandardParkingSpace;
     }
 
     public int getParkingSpace() {
@@ -81,7 +73,7 @@ public class Parking {
     }
 
     public int getUnavailableMonthlyParkingSpace() {
-        return occupiedMonthlyParkingSpace;
+        return monthlyParkingSpace - availableMonthlyParkingSpace;
     }
 
     public int getStandardParkingSpace() {
@@ -93,9 +85,13 @@ public class Parking {
     }
 
     public void setMonthlyParkingSpace(int newMonthlyParkingSpace) {
-        if (newMonthlyParkingSpace > monthlyParkingSpace + availableStandardParkingSpace) {
+        if (newMonthlyParkingSpace > monthlyParkingSpace + availableStandardParkingSpace){
             throw new UnavailableParkingSpaceRequestException(
                     "Valor está acima da quantidade de vagas disponíveis do estacionamento!");}
+
+        int occupiedStandardParkingSpace = getUnavailableStandardParkingSpace();
+        int occupiedMonthlyParkingSpace = getUnavailableMonthlyParkingSpace();
+
         monthlyParkingSpace = newMonthlyParkingSpace;
         standardParkingSpace = parkingSpace - monthlyParkingSpace;
         availableStandardParkingSpace = standardParkingSpace - occupiedStandardParkingSpace;
@@ -107,10 +103,10 @@ public class Parking {
         return "\nVagas totais: " + parkingSpace +
                 "\nVagas mensais: " + monthlyParkingSpace +
                 "\nVagas mensais livres: " + availableMonthlyParkingSpace +
-                "\nVagas mensais ocupadas: " + occupiedMonthlyParkingSpace +
+                "\nVagas mensais ocupadas: " + getUnavailableMonthlyParkingSpace() +
                 "\nVagas padrão: " + standardParkingSpace +
                 "\nVagas padrão livres: " + availableStandardParkingSpace +
-                "\nVagas padrão ocupadas: " + occupiedStandardParkingSpace;
+                "\nVagas padrão ocupadas: " + getUnavailableStandardParkingSpace();
     }
 
 }
