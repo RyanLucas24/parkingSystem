@@ -58,7 +58,7 @@ public class ParkingClassTest {
                 parking::occupyAStandardParkingSpace
         );
 
-        Assertions.assertEquals("Vaga padrão indisponível !!", exception.getMessage());
+        Assertions.assertEquals("Vaga padrão indisponível!!", exception.getMessage());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ParkingClassTest {
                 parking::occupyAMonthlyParkingSpace
         );
 
-        Assertions.assertEquals("Vaga mensal indisponível !!", exception.getMessage());
+        Assertions.assertEquals("Vaga mensal indisponível!!", exception.getMessage());
     }
 
     @Test
