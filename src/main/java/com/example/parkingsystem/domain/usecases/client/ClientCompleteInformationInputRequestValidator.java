@@ -7,9 +7,10 @@ import com.example.parkingsystem.domain.usecases.utils.Validator;
 public class ClientCompleteInformationInputRequestValidator extends Validator<Client> {
     @Override
     public Notification validate(Client client) {
-        ClientBasicInformationInputRequestValidator validator = new ClientBasicInformationInputRequestValidator();
+        Validator<Client> validator = new ClientBasicInformationInputRequestValidator();
         Notification notification = validator.validate(client);
-
+        if (client == null)
+            return notification;
         if (nullOrEmpty(client.getName()))
             notification.addError("Nome do cliente está nulo ou vazio!!");
         if (nullOrEmpty(client.getEmail()))
