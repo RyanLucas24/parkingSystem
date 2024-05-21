@@ -4,7 +4,7 @@ import com.example.parkingsystem.domain.usecases.utils.UnavailableParkingSpaceRe
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ParkingClassTest {
+public class ParkingClassUnitTest {
 
     private final Parking parking = new Parking(20);
 
