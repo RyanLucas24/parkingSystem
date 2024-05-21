@@ -15,8 +15,8 @@ public class ClientBasicInformationInputRequestValidator extends Validator<Clien
         if (nullOrEmpty(client.getCpf())) {
             notification.addError("CPF está nulo ou vazio!!");
         }
-        if (nullOrEmpty(client.getVehiclePlate())){
-            notification.addError("Placa do Veículo está nula ou vazia!!");
+        if (nullOrEmpty(client.getVehiclesPlate())){
+            notification.addError("Placas do Veículo estão nulas ou vazias!!");
         }
         return notification;
     }
