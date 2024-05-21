@@ -1,6 +1,7 @@
 package com.example.parkingsystem.domain.model.client;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
     private String cpf;
@@ -8,11 +9,11 @@ public class Client {
     private String phone;
     private String email;
     private String address;
-    private String vehiclePlate;
+    private final List<String> vehiclesPlate = new ArrayList<>();
 
     public Client(String cpf, String vehiclePlate) {
         this.cpf = cpf;
-        this.vehiclePlate = vehiclePlate;
+        this.vehiclesPlate.add(vehiclePlate);
     }
 
     public String getCpf() {
@@ -23,12 +24,8 @@ public class Client {
         this.cpf = cpf;
     }
 
-    public String getVehiclePlate() {
-        return vehiclePlate;
-    }
-
-    public void setVehiclePlate(String vehiclePlate) {
-        this.vehiclePlate = vehiclePlate;
+    public List<String> getVehiclesPlate() {
+        return vehiclesPlate;
     }
 
     public String getName() {
