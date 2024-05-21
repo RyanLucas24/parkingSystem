@@ -1,9 +1,12 @@
 package com.example.parkingsystem.domain.model.service;
 
+import com.example.parkingsystem.domain.model.client.Client;
+
 public abstract class Service {
-    double value;
-    double time;
-    double toleranceTime;
+    private double value;
+    private double time;
+    private double toleranceTime;
+    private Client client;
 
     public abstract double calculateBilling();
 }
