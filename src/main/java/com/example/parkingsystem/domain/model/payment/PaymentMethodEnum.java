@@ -1,6 +1,6 @@
 package com.example.parkingsystem.domain.model.payment;
 
-public enum paymentMethodEnum {
+public enum PaymentMethodEnum {
     CARTAO,
     DINHEIRO,
     PIX
