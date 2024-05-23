@@ -9,6 +9,8 @@ public class Client {
     private String phone;
     private String email;
     private String address;
+    private boolean paymentChecked;
+    private String typeService;
     private List<String> vehiclesPlate = new ArrayList<>();
 
     public Client(String cpf, String vehiclePlate) {
@@ -16,13 +18,17 @@ public class Client {
         this.vehiclesPlate.add(vehiclePlate);
     }
 
-    public Client(Client client, String name, String phone, String email, String address) {
+
+
+    public Client(Client client, String name, String phone, String email, String address, String typeService) {
         this.cpf = client.getCpf();
         this.vehiclesPlate = client.getVehiclesPlate();
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.typeService = typeService;
+        this.paymentChecked = true;
     }
 
     public String getCpf() {
@@ -67,6 +73,22 @@ public class Client {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isPaymentChecked() {
+        return paymentChecked;
+    }
+
+    public void setPaymentChecked(boolean paymentChecked) {
+        this.paymentChecked = paymentChecked;
+    }
+
+    public String getTypeService() {
+        return typeService;
+    }
+
+    public void setTypeService(String typeService) {
+        this.typeService = typeService;
     }
 
 }
