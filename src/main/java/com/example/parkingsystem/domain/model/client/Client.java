@@ -28,7 +28,7 @@ public class Client {
         this.email = email;
         this.address = address;
         this.typeService = typeService;
-        this.paymentChecked = true;
+        this.paymentChecked = false;
     }
 
     public String getCpf() {

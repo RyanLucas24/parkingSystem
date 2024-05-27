@@ -22,16 +22,28 @@ public class RegisterExitUseCase {
 
     public Client getClientByCpf(String cpf){
         Optional<Client> clientOptional = clientDAO.findOne(cpf);
-        if(clientOptional.isEmpty())
-            throw new IllegalArgumentException("Client not found");
+        if(clientOptional.isEmpty()) {
+            throw new IllegalArgumentException("Cliente não encontrado");
+        }
         Client clientFound = clientOptional.get();
-
+        // utilizar switch case para verificar tipo de serviço seria mais adequado TODO: implementar switch case
         if(Objects.equals(clientFound.getTypeService(), "servico padrao")) {
-            //throw new IllegalArgumentException("Monthly customer cannot leave through this method");
-            // TODO: chamar calculo de valor pagamento stantard Service here
-
-        } else if (!clientFound.isPaymentChecked())
-            throw new IllegalArgumentException("Payment not made");
+            if(!clientFound.isPaymentChecked()) {
+                // TODO: chamar calculo de valor pagamento standard Service aqui
+                // TODO: liberar vaga e libera cliente
+                clientFound.setPaymentChecked(true);
+            } else {
+                throw new IllegalArgumentException("Pagamento não efetuado");
+            }
+        // fluxo alternativo 1
+        } else if (Objects.equals(clientFound.getTypeService(), "mensalista")){
+            if(clientFound.isPaymentChecked()) {
+                throw new IllegalArgumentException("Pagamento recebido");
+                // TODO: liberar vaga mensalista e libera cliente
+            } else {
+                throw new IllegalArgumentException("Pagamento não efetuado");
+            }
+        }
 
         return clientFound;
     }
