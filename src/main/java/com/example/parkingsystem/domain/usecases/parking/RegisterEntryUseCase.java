@@ -1,7 +1,7 @@
 package com.example.parkingsystem.domain.usecases.parking;
 
 import com.example.parkingsystem.domain.model.client.Client;
-import com.example.parkingsystem.domain.model.payment.Payment;
+import com.example.parkingsystem.domain.model.parking.Parking;
 import com.example.parkingsystem.domain.model.service.MonthlyService;
 import com.example.parkingsystem.domain.model.service.Service;
 import com.example.parkingsystem.domain.model.service.StandardService;
@@ -64,5 +64,13 @@ public class RegisterEntryUseCase {
             return true;
 
         return ((MonthlyService) service).isPaymentChecked();
+    }
+
+    public boolean liberateAccess(Client client, Parking parking){
+        if(isClientReadyToEnter(client.getService())){
+            parking.occupyAMonthlyParkingSpace();
+            return true;
+        }
+        return false; //Efetua pagamento
     }
 }
