@@ -1,23 +1,25 @@
 package com.example.parkingsystem.domain.model.service;
 
-import com.example.parkingsystem.domain.model.client.Client;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MonthlyService extends Service{
-    private Date paymentDate;
+    private LocalDateTime paymentDate;
     private boolean paymentChecked;
+
+    public MonthlyService(double value, double time, double toleranceTime) {
+        super(value, time, toleranceTime);
+    }
 
     @Override
     public double calculateBilling() {
         return value;
     }
 
-    public Date getPaymentDate() {
+    public LocalDateTime getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
 
