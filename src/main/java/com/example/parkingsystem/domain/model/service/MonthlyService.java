@@ -10,6 +10,22 @@ public class MonthlyService extends Service{
 
     @Override
     public double calculateBilling() {
-        return 0;
+        return value;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public void setPaymentChecked(boolean paymentChecked) {
+        this.paymentChecked = paymentChecked;
+    }
+
+    public boolean isPaymentChecked() {
+        return paymentChecked;
     }
 }
