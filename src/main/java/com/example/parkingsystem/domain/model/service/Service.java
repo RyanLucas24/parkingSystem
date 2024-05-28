@@ -9,6 +9,12 @@ public abstract class Service {
 
     public abstract double calculateBilling();
 
+    public Service(double value, double time, double toleranceTime) {
+        this.value = value;
+        this.time = time;
+        this.toleranceTime = toleranceTime;
+    }
+
     public double getValue() {
         return value;
     }
