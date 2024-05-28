@@ -48,13 +48,13 @@ public class RegisterExitUseCase {
 
         switch (clientFound.getTypeService()) {
             case "standard":
+                clientFound.setPaymentChecked(true);
                 if (!clientFound.isPaymentChecked()) {
                     // Chama o cálculo de valor do pagamento para serviço standard
                     calculateStandardServicePayment(clientFound);
                     // Libera a vaga e o cliente
                     freeParkingSpot(clientFound);
                     releaseClient(clientFound);
-                    clientFound.setPaymentChecked(true);
                 } else {
                     throw new IllegalArgumentException("Pagamento não efetuado");
                 }
