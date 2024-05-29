@@ -37,6 +37,8 @@ public class Client {
         this.vehiclesPlate.add(vehiclePlate);
     }
 
+
+
     public Client(Client client, String name, String phone, String email, String address) {
         this.cpf = client.getCpf();
         this.vehiclesPlate = client.getVehiclesPlate();
