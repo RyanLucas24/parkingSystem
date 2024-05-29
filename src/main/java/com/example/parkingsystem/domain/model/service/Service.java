@@ -1,13 +1,12 @@
 package com.example.parkingsystem.domain.model.service;
 
-import com.example.parkingsystem.domain.model.client.Client;
-
 public abstract class Service {
     protected double value;
     protected double time;
     protected double toleranceTime;
 
-    public abstract double calculateBilling();
+
+    public abstract void calculateBilling();
 
     public Service(double value, double time, double toleranceTime) {
         this.value = value;
@@ -26,4 +25,5 @@ public abstract class Service {
     public double getToleranceTime() {
         return toleranceTime;
     }
+
 }
