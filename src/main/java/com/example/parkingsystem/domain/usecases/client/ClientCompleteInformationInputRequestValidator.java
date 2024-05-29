@@ -19,6 +19,9 @@ public class ClientCompleteInformationInputRequestValidator extends Validator<Cl
             notification.addError("Telefone do cliente está nulo ou vazio!!");
         if (nullOrEmpty(client.getAddress()))
             notification.addError("Endereço do cliente está nulo ou vazio!!");
+        if (client.getService() == null){
+            notification.addError("Serviço do cliente está nulo!!");
+        }
 
         return notification;
     }
