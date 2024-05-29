@@ -1,8 +1,9 @@
 package com.example.parkingsystem.domain.model.client;
-
 import com.example.parkingsystem.domain.model.service.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Client {
@@ -11,6 +12,7 @@ public class Client {
     private String phone;
     private String email;
     private String address;
+    private LocalDateTime entryDate;
     private List<String> vehiclesPlate = new ArrayList<>();
     private Service service;
 
@@ -20,6 +22,14 @@ public class Client {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public LocalDateTime getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDateTime entryDate) {
+        this.entryDate = entryDate;
     }
 
     public Client(String cpf, String vehiclePlate) {
