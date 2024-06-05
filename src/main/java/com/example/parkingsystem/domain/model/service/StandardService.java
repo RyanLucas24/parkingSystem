@@ -1,5 +1,7 @@
 package com.example.parkingsystem.domain.model.service;
 
+import com.example.parkingsystem.domain.usecases.parking.AdditionalCostUseCase;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -17,14 +19,12 @@ public class StandardService extends Service{
     }
 
     @Override
-    public void calculateBilling() {
+    public double calculateBilling() {
         Duration duration = Duration.between(checkIn, checkOut);
         double hours = duration.toHours();
         double cost = hours * getValue();
 
-        if (hours > getTime() + getToleranceTime()) {
-            cost += additionalValue;
-        }
+        cost += AdditionalCostUseCase.calculateAdditionalCost(additionalValue, hours, toleranceTime);
 
         return cost;
     }
