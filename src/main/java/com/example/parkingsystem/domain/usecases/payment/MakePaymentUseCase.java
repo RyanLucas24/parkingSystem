@@ -1,24 +1,25 @@
-package com.example.parkingsystem.domain.usecases.client;
+package com.example.parkingsystem.domain.usecases.payment;
 
 import com.example.parkingsystem.domain.model.client.Client;
-import com.example.parkingsystem.domain.model.payment.*;
-import com.example.parkingsystem.domain.usecases.payment.PaymentDAO;
+import com.example.parkingsystem.domain.model.payment.Payment;
+import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
+import com.example.parkingsystem.domain.usecases.client.ClientDAO;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 
-public class makePaymentUseCase{
-    private PaymentDAO paymentDAO;
-    private ClientDAO clientDAO;
+public class MakePaymentUseCase {
 
-    public makePaymentUseCase(PaymentDAO paymentDAO, ClientDAO clientDAO) {
-        this.paymentDAO = paymentDAO;
-        this.clientDAO = clientDAO;
+    public Payment makePayment (Client client, PaymentMethodEnum paymentMethod) {
+        if (client == null) return null;
+        double pricePerMinute = 0.2;
+        double totalPaymentValue = pricePerMinute * calcularDuracao(client);
+        return new Payment(totalPaymentValue, paymentMethod);
     }
 
-    public long calcularDuracao(LocalDateTime dataInicial) {
+    private double calcularDuracao(Client client) {
+        LocalDateTime dataInicial = client.getEntryDate();
         LocalDateTime dataFinal = LocalDateTime.now();
         Duration d = Duration.between(dataInicial, dataFinal);
         return d.toMinutes();
