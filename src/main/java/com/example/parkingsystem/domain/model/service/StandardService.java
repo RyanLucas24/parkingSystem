@@ -17,7 +17,7 @@ public class StandardService extends Service{
     }
 
     @Override
-    public void calculateBilling() {
+    public double calculateBilling() {
         Duration duration = Duration.between(checkIn, checkOut);
         double hours = duration.toHours();
         double cost = hours * getValue();

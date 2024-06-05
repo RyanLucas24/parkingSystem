@@ -1,6 +1,7 @@
 package com.example.parkingsystem.domain.model.attendant;
 
 import com.example.parkingsystem.domain.model.client.Client;
+import com.example.parkingsystem.domain.model.payment.Payment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Attendant {
         System.out.println("Detalhes de contato registrados:" + client);
     }
 
-    public void makeThePayment(Client client){
+    public void makeThePayment(Client client, Payment payment){
         // Aqui adicionar lógica para efetuar pagamento
         System.out.println("Pagamento realizado:" + client);
     }

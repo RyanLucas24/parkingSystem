@@ -36,34 +36,43 @@ public class RegisterExitUseCase {
         MonthlyService monthlyService = (MonthlyService) clientFound.getService();
         StandardService standardService = (StandardService) clientFound.getService();
 
-        switch (clientFound.getService()) {
-            case "standard": // TODO - Refatorar para usar o enum ou trocar para string
-                // Chama o cálculo de valor do pagamento para serviço standard
-                standardService.setCheckOut(LocalDateTime.now());
-                standardService.calculateBilling();
-                setPaymentChecked(true);
-                if (isPaymentChecked()) {
-                    // Libera a vaga e o cliente
-                    parking.liberateAStandardParkingSpace();
-                } else {
-                    throw new IllegalArgumentException("Pagamento não efetuado");
-                }
-                break;
-            // fluxo alternativo 1
-            case "monthly": // TODO - Refatorar para usar o enum ou trocar para string
-                if (monthlyService.isPaymentChecked()) {
-                    // Libera a vaga e o cliente
-                    parking.liberateAMonthlyParkingSpace();
-                } else {
-                    throw new IllegalArgumentException("Pagamento não efetuado");
-                }
-                break;
-
-            default:
-                throw new IllegalArgumentException("Tipo de serviço inválido");
+        if (clientFound.getService() == null) {
+            throw new IllegalArgumentException("Cliente não possui serviço ativo");
         }
 
-        return clientFound; // TODO - Verificar se é necessário retornar o cliente
+        if (monthlyService != null && standardService != null) {
+            throw new IllegalArgumentException("Cliente possui mais de um serviço ativo");
+        }
+
+        //fluxo principal
+
+        if (clientFound.getService() == standardService) {
+            if (standardService.getCheckOut() != null) {
+                throw new IllegalArgumentException("Cliente já realizou o pagamento");
+            }
+            // Chama o cálculo de valor do pagamento para serviço standard
+            standardService.setCheckOut(LocalDateTime.now());
+            standardService.calculateBilling();
+            setPaymentChecked(true);
+            if (isPaymentChecked()) {
+                // Libera a vaga e o cliente
+                parking.liberateAStandardParkingSpace();
+            } else {
+                throw new IllegalArgumentException("Pagamento não efetuado");
+            }
+
+        }
+
+        // Fluxo alternativo 1
+        if (clientFound.getService() == monthlyService) {
+            if (monthlyService.isPaymentChecked()) {
+                // Libera a vaga e o cliente
+                parking.liberateAMonthlyParkingSpace();
+            } else {
+                throw new IllegalArgumentException("Pagamento não efetuado");
+            }
+        }
+        return clientFound;
     }
 
     public boolean isPaymentChecked() {

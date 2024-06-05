@@ -12,7 +12,7 @@ public class MonthlyService extends Service{
     }
 
     @Override
-    public void calculateBilling() {
+    public double calculateBilling() {
         double cost = getValue();
 
         // Verifique se a data atual é superior a um mês após a data de pagamento
@@ -25,6 +25,7 @@ public class MonthlyService extends Service{
             setPaymentChecked(true);
 //            throw new IllegalArgumentException("Pagamento efetuado");
         }
+        return cost;
     }
 
     public LocalDateTime getPaymentDate() {
