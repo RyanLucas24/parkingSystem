@@ -6,7 +6,7 @@ public abstract class Service {
     protected double toleranceTime;
 
 
-    public abstract void calculateBilling();
+    public abstract double calculateBilling();
 
     public Service(double value, double time, double toleranceTime) {
         this.value = value;
