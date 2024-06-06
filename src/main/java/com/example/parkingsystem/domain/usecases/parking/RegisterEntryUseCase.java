@@ -74,10 +74,14 @@ public class RegisterEntryUseCase {
     }
 
     public void liberateAccess(Client client, Parking parking, MakePaymentUseCase useCase) {
+        Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
+        if(clientOptional.isEmpty()){
+            throw new EntityNotFoundException("Cliente não encontrado");
+        }
         if (!isClientReadyToEnter(client.getService()))
             useCase.makePayment(client, PaymentMethodEnum.PIX);
-
         parking.occupyAMonthlyParkingSpace();
         parkingDAO.update(parking);
+        System.out.println("Acesso Liberado Com Sucesso!!");
     }
 }
