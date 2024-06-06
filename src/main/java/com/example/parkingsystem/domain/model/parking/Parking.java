@@ -3,6 +3,8 @@ package com.example.parkingsystem.domain.model.parking;
 import com.example.parkingsystem.domain.usecases.utils.UnavailableParkingSpaceRequestException;
 
 public class Parking {
+
+    private int id;
     private int availableStandardParkingSpace;
     private int availableMonthlyParkingSpace;
     private final int parkingSpace;
@@ -96,6 +98,14 @@ public class Parking {
         standardParkingSpace = parkingSpace - monthlyParkingSpace;
         availableStandardParkingSpace = standardParkingSpace - occupiedStandardParkingSpace;
         availableMonthlyParkingSpace = monthlyParkingSpace - occupiedMonthlyParkingSpace;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
