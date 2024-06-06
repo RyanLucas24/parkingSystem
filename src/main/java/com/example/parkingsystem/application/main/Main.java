@@ -30,7 +30,6 @@ public class Main {
         );
         registerEntryUseCase.insertClientBasicInformation(client);
 
-
         Client clientComplete = new Client(
                 client,
                 "Usuario Teste",
@@ -41,9 +40,7 @@ public class Main {
         Service service = new MonthlyService(50);
 
         registerEntryUseCase.chooseAService(clientComplete, service);
-        registerEntryUseCase.liberateAccess(client, parking, makePaymentUseCase);
-
-
+        registerEntryUseCase.liberateAccess(clientComplete, parking, makePaymentUseCase);
     }
 
     private static void configureInjection() {
