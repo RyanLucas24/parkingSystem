@@ -6,13 +6,17 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class StandardService extends Service{
+    protected double time;
+    protected double toleranceTime;
     private double additionalValue;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
 
 
     public StandardService(double value, double time, double toleranceTime, double additionalValue, LocalDateTime checkOut) {
-        super(value, time, toleranceTime);
+        super(value);
+        this.time = time;
+        this.toleranceTime = toleranceTime;
         this.additionalValue = additionalValue;
         checkIn = LocalDateTime.now();
         this.checkOut = checkOut;
@@ -24,7 +28,9 @@ public class StandardService extends Service{
         double hours = duration.toHours();
         double cost = hours * getValue();
 
-        cost += AdditionalCostUseCase.calculateAdditionalCost(additionalValue, hours, toleranceTime);
+        AdditionalCostUseCase additionalCostUseCase = new AdditionalCostUseCase();
+
+        cost += additionalCostUseCase.calculateAdditionalCost(additionalValue, hours, toleranceTime);
 
         return cost;
     }
@@ -53,5 +59,19 @@ public class StandardService extends Service{
         this.additionalValue = additionalValue;
     }
 
+    public double getTime() {
+        return time;
+    }
 
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getToleranceTime() {
+        return toleranceTime;
+    }
+
+    public void setToleranceTime(double toleranceTime) {
+        this.toleranceTime = toleranceTime;
+    }
 }
