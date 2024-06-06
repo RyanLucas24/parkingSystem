@@ -1,13 +1,14 @@
 package com.example.parkingsystem.domain.model.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class MonthlyService extends Service{
     private LocalDateTime paymentDate;
     private boolean paymentChecked;
 
-    public MonthlyService(double value, double time, double toleranceTime) {
-        super(value, time, toleranceTime);
+    public MonthlyService(double value) {
+        super(value);
     }
 
     @Override
@@ -15,7 +16,7 @@ public class MonthlyService extends Service{
         double cost = getValue();
 
         // Verifique se a data atual é superior a um mês após a data de pagamento
-        if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
+        if(paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
             setPaymentChecked(false);
 //            throw new IllegalArgumentException("Pagamento não efetuado");
             // Adicione uma taxa de atraso ao custo (Serviço mensal não cobra taxa adicional)
@@ -40,7 +41,11 @@ public class MonthlyService extends Service{
         this.paymentChecked = paymentChecked;
     }
 
-    public boolean isPaymentChecked() {
+    public boolean isPaymentChecked(){
+        Duration between = Duration.between(paymentDate, LocalDateTime.now());
+        if(between.toDays() > 30)
+            paymentChecked = false;
         return paymentChecked;
     }
+
 }
