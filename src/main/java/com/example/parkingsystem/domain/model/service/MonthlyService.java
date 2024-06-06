@@ -13,20 +13,7 @@ public class MonthlyService extends Service{
 
     @Override
     public double calculateBilling() {
-        double cost = getValue();
-
-        // Verifique se a data atual é superior a um mês após a data de pagamento
-        if(paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
-            setPaymentChecked(false);
-//            throw new IllegalArgumentException("Pagamento não efetuado");
-            // Adicione uma taxa de atraso ao custo (Serviço mensal não cobra taxa adicional)
-            // Cobrar +1 mês;
-        } else {
-            setPaymentChecked(true);
-//            throw new IllegalArgumentException("Pagamento efetuado");
-        }
-        // temp
-        return cost;
+        return value;
     }
 
     public LocalDateTime getPaymentDate() {
@@ -42,6 +29,9 @@ public class MonthlyService extends Service{
     }
 
     public boolean isPaymentChecked(){
+        if(paymentDate == null){
+            return false;
+        }
         Duration between = Duration.between(paymentDate, LocalDateTime.now());
         if(between.toDays() > 30)
             paymentChecked = false;
