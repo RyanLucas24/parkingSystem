@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Payment {
+
+    private int id;
     private double value;
     private PaymentMethodEnum paymentMethod;
     private LocalDateTime date;
@@ -36,5 +38,13 @@ public class Payment {
 
     public void setDate(Date date) {
         this.date = LocalDateTime.now();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
