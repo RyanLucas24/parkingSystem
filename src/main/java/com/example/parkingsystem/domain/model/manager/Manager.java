@@ -3,25 +3,13 @@ package com.example.parkingsystem.domain.model.manager;
 import com.example.parkingsystem.domain.model.service.Service;
 
 public class Manager {
-    private Service service;
+    private String password;
 
-    public Manager(Service service) {
-        this.service = service;
+    public String getPassword() {
+        return password;
     }
 
-    public void manageContactService() {
-
-    }
-
-    public void viewPermanenceReport() {
-
-    }
-
-    public void viewPaymentReport() {
-
-    }
-
-    public  void  viewReportByService() {
-
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
