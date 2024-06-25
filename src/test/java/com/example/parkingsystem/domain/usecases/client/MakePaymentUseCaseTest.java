@@ -34,13 +34,24 @@ public class MakePaymentUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should create correct stay time")
-    void shouldCreateCorrectStayTime() {
+    @DisplayName("Should bill correctly")
+    void shouldBillCorrectly() {
         Client client = new Client("123", "a123");
         MakePaymentUseCase makePayment = new MakePaymentUseCase();
         LocalDateTime tenMinuteEntryDate = LocalDateTime.now().minusMinutes(60);
         client.setEntryDate(tenMinuteEntryDate);
         Payment payment = makePayment.payment(client, PaymentMethodEnum.CARTAO);
         Assertions.assertEquals( 18,payment.getValue());
+    }
+
+    @Test
+    @DisplayName("Should correctly save payment method")
+    void shouldSavePaymentMethod() {
+        Client client = new Client("123", "a123");
+        MakePaymentUseCase makePayment = new MakePaymentUseCase();
+        LocalDateTime tenMinuteEntryDate = LocalDateTime.now().minusMinutes(90);
+        client.setEntryDate(tenMinuteEntryDate);
+        Payment payment = makePayment.payment(client, PaymentMethodEnum.CARTAO);
+        Assertions.assertEquals( PaymentMethodEnum.CARTAO,payment.getPaymentMethod());
     }
 }
