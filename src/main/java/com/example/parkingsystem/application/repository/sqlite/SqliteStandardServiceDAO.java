@@ -2,11 +2,13 @@ package com.example.parkingsystem.application.repository.sqlite;
 
 import com.example.parkingsystem.domain.model.service.Service;
 import com.example.parkingsystem.domain.model.service.StandardService;
+import com.example.parkingsystem.domain.usecases.reports.DailyServiceReportUseCase;
 import com.example.parkingsystem.domain.usecases.service.StandardServiceDAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,4 +131,55 @@ public class SqliteStandardServiceDAO implements StandardServiceDAO {
                 LocalDateTime.parse(rs.getString("checkOut"))
         );
     }
+
+    public double averageVisitTime(LocalDate startDate, LocalDate endDate) {
+        // Convertendo as datas para o formato correto de string para uso em SQL
+        String start = startDate.toString() + "T00:00:00"; // Início do dia
+        String end = endDate.toString() + "T23:59:59"; // Fim do dia
+
+        String sql = "SELECT AVG((julianday(checkOut) - julianday(checkIn)) * 24 * 60) as AverageTime " +
+                "FROM StandardService " +
+                "WHERE datetime(checkIn) >= ? AND datetime(checkOut) <= ?";
+
+        try (PreparedStatement stmt = ConnectionFactory.createConnection().prepareStatement(sql)) {
+            stmt.setString(1, start);
+            stmt.setString(2, end);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("AverageTime");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+
+        return 0;
+    }
+
+    public List<DailyServiceReportUseCase> getDailyReport(LocalDate startDate, LocalDate endDate) {
+        List<DailyServiceReportUseCase> reports = new ArrayList<>();
+        String sql = "SELECT date(paymentDate) AS Day, COUNT(*) AS NumberOfPayments, SUM(value) AS TotalValue " +
+                "FROM MonthlyService " +
+                "WHERE date(paymentDate) >= ? AND date(paymentDate) <= ? " +
+                "GROUP BY date(paymentDate)";
+
+        try (PreparedStatement stmt = ConnectionFactory.createConnection().prepareStatement(sql)) {
+            stmt.setString(1, startDate.toString());
+            stmt.setString(2, endDate.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                DailyServiceReportUseCase report = new DailyServiceReportUseCase(
+                        rs.getString("Day"),
+                        rs.getInt("NumberOfPayments"),
+                        rs.getDouble("TotalValue")
+                );
+                reports.add(report);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+
+        return reports;
+    }
+
 }
