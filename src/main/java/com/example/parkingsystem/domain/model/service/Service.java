@@ -6,6 +6,7 @@ public abstract class Service {
     protected double value;
 
     public abstract double calculateBilling();
+
     public Service(double value){
             this.value = value;
         }
