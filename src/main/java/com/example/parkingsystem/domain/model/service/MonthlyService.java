@@ -14,6 +14,7 @@ public class MonthlyService extends Service{
     @Override
     public double calculateBilling() {
         double cost = getValue();
+<<<<<<< Updated upstream
 
         // Verifique se a data atual é superior a um mês após a data de pagamento
         if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
@@ -21,6 +22,12 @@ public class MonthlyService extends Service{
 //            throw new IllegalArgumentException("Pagamento não efetuado");
             // Adicione uma taxa de atraso ao custo
             //cost += lateFee;
+=======
+        //double lateFee = getLateFee();
+        if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
+            setPaymentChecked(false);
+            return cost; //+ lateFee;
+>>>>>>> Stashed changes
         } else {
             setPaymentChecked(true);
 //            throw new IllegalArgumentException("Pagamento efetuado");

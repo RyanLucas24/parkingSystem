@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.parkingsystem.DashBoardController">
+    <children>
+        <AnchorPane fx:id="main_form" prefHeight="600.0" prefWidth="1102.0">
+            <children>
+                <BorderPane layoutX="137.0" layoutY="90.0" prefHeight="600.0" prefWidth="1102.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <top>
+                        <AnchorPane prefHeight="35.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="-38.0" layoutY="-86.0" prefHeight="35.0" prefWidth="1102.0" styleClass="top-form" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <FontAwesomeIconView glyphName="CAR" layoutX="7.0" layoutY="21.0" />
+                                        <Label layoutX="29.0" layoutY="10.0" text="Parking Manager">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Button fx:id="close" layoutX="1041.0" layoutY="6.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="47.0" styleClass="close" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                            <graphic>
+                                                <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="minimize" layoutX="995.0" layoutY="5.0" onAction="#minimize" prefHeight="24.0" prefWidth="47.0" styleClass="minimize" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="2.0">
+                                            <graphic>
+                                                <FontAwesomeIconView glyphName="MINUS" onDragDetected="#minimize" size="1.2em" />
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </top>
+                    <left>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="-14.0" layoutY="29.0" prefHeight="564.8" prefWidth="200.0" styleClass="nav-form" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <FontAwesomeIconView fill="WHITE" glyphName="CAR" layoutX="49.0" layoutY="112.0" size="8em" />
+                                        <Label alignment="CENTER" layoutY="145.0" prefHeight="18.0" prefWidth="200.0" text="Parking Manager" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Black" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Line endX="105.90000915527344" endY="-1.52587890625E-5" layoutX="102.0" layoutY="191.0" startX="-100.0" stroke="WHITE" />
+                                        <Button fx:id="homeBtn" layoutX="15.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Home">
+                                            <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="1.5em" />
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="mensalistBtn" layoutX="15.0" layoutY="264.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Mensalist's">
+                                            <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" />
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="managerBtn" layoutX="14.0" layoutY="526.0" mnemonicParsing="false" onAction="#manager" styleClass="nav-btn" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Manager">
+                                            <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="SIGN_IN" />
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </left>
+                    <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane fx:id="standard_form" layoutX="9.0" layoutY="42.0" prefHeight="565.0" prefWidth="893.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane layoutX="19.0" layoutY="14.0" prefHeight="539.0" prefWidth="861.0" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css">
+                                            <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                            </styleClass>
+                                            <children>
+                                                <TableView focusTraversable="false" layoutX="16.0" layoutY="152.0" prefHeight="469.0" prefWidth="839.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="12.0">
+                                                    <columns>
+                                                        <TableColumn prefWidth="115.99997901916504" text="Vaga" />
+                                                        <TableColumn prefWidth="109.60000610351562" text="Entrada" />
+                                                        <TableColumn prefWidth="89.5999755859375" text="Sáida" />
+                                                        <TableColumn prefWidth="188.00003051757812" text="Nome" />
+                                                        <TableColumn prefWidth="109.5999755859375" text="Placa" />
+                                                        <TableColumn prefWidth="85.5999755859375" text="Valor Hora" />
+                                                        <TableColumn prefWidth="146.40008544921875" text="Total à Receber" />
+                                                    </columns>
+                                                </TableView>
+                                                <AnchorPane layoutX="16.0" layoutY="6.0" prefHeight="44.0" prefWidth="838.0" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.bottomAnchor="489.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="6.0">
+                                                    <styleClass>
+                                                        <String fx:value="white-bg" />
+                                                        <String fx:value="shadow" />
+                                                    </styleClass>
+                                                    <children>
+                                                        <Label layoutX="96.0" layoutY="13.0" prefHeight="18.0" prefWidth="46.0" text="Nome:">
+                                                            <font>
+                                                                <Font name="Arial" size="15.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <TextField fx:id="standard_nomeBtn" layoutX="143.0" layoutY="8.0" prefHeight="26.0" prefWidth="198.0" promptText="Nome" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                                        <Label layoutX="372.0" layoutY="13.0" prefHeight="18.0" prefWidth="46.0" text="Placa:">
+                                                            <font>
+                                                                <Font name="Arial" size="15.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <TextField fx:id="standard_plateBtn" layoutX="419.0" layoutY="9.0" prefHeight="26.0" prefWidth="198.0" promptText="Placa" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css">
+                                                            <cursor>
+                                                                <Cursor fx:constant="TEXT" />
+                                                            </cursor></TextField>
+                                                        <Button fx:id="standard_cadBtn" layoutX="657.0" layoutY="9.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" styleClass="add" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Cadastrar" textAlignment="CENTER" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane fx:id="addMensalist_form" layoutX="10.0" layoutY="14.0" prefHeight="539.0" prefWidth="866.0" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" visible="false">
+                                    <styleClass>
+                                        <String fx:value="white-bg" />
+                                        <String fx:value="shadow" />
+                                    </styleClass>
+                                    <children>
+                                        <AnchorPane prefHeight="354.0" prefWidth="867.0" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                            </styleClass>
+                                            <children>
+                                                <TableView layoutX="12.0" layoutY="55.0" prefHeight="285.0" prefWidth="837.0">
+                                                    <columns>
+                                                        <TableColumn fx:id="mensalist_name" prefWidth="124.80005836486816" text="Nome" />
+                                                        <TableColumn fx:id="mensalist_cpf" prefWidth="107.99993896484375" text="CPF" />
+                                                        <TableColumn fx:id="mensalist_email" prefWidth="100.00006103515625" text="Email" />
+                                                        <TableColumn fx:id="mensalist_adress" prefWidth="110.0" text="Endereço" />
+                                                        <TableColumn fx:id="mensalist_phone" minWidth="1.5999755859375" prefWidth="104.0" text="Telefone" />
+                                                        <TableColumn fx:id="mensalist_entryDate" prefWidth="109.0" text="Data de entrada" />
+                                                        <TableColumn fx:id="mensalist_plate" minWidth="1.5999755859375" prefWidth="83.0" text="Placa" />
+                                                        <TableColumn fx:id="mensalist_payment" minWidth="1.5999755859375" prefWidth="96.0" text="Pagamento" />
+                                                    </columns>
+                                                </TableView>
+                                                <TextField fx:id="mensalist_search" layoutX="10.0" layoutY="14.0" prefHeight="30.0" prefWidth="375.0" promptText="Search" styleClass="search" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                                <FontAwesomeIconView glyphName="SEARCH" layoutX="14.0" layoutY="35.0" size="1.5em" />
+                                            </children>
+                                        </AnchorPane>
+                                        <Label layoutX="27.0" layoutY="390.0" text="Nome:" />
+                                        <TextField fx:id="addMensalist_name" layoutX="75.0" layoutY="380.0" promptText="Nome" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="236.0" layoutY="390.0" text="Cpf:" />
+                                        <TextField fx:id="addMensalist_cpf" layoutX="268.0" layoutY="380.0" promptText="Cpf" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="429.0" layoutY="391.0" text="Email:" />
+                                        <TextField fx:id="addMensalist_email" layoutX="472.0" layoutY="380.0" promptText="Email" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="633.0" layoutY="390.0" text="Endereço:" />
+                                        <TextField fx:id="addMensalist_adress" layoutX="696.0" layoutY="380.0" promptText="Endereço" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="78.0" layoutY="439.0" text="Telefone:" />
+                                        <TextField fx:id="addMensalist_phone" layoutX="138.0" layoutY="431.0" promptText="Telefone" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="300.0" layoutY="439.0" text="Data Entrada:" />
+                                        <TextField fx:id="addMensalist_entryDate" layoutX="382.0" layoutY="431.0" promptText="Data Entrada" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Label layoutX="542.0" layoutY="439.0" text="Placa:" />
+                                        <TextField fx:id="addMensalist_plate" layoutX="584.0" layoutY="430.0" promptText="Placa" styleClass="textfield" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" />
+                                        <Button fx:id="addMensalist_add" layoutX="424.0" layoutY="495.0" mnemonicParsing="false" styleClass="add" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Cadastrar" textAlignment="CENTER" />
+                                        <Button fx:id="addMensalist_edit" layoutX="361.0" layoutY="495.0" mnemonicParsing="false" styleClass="edit" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Editar" textAlignment="CENTER" />
+                                        <Button fx:id="addMensalist_remove" layoutX="295.0" layoutY="494.0" mnemonicParsing="false" styleClass="delete" stylesheets="@../../../../java/com/example/parkingsystem/style/dashstyle.css" text="Excluir" textAlignment="CENTER" />
+                                    </children>
+                                    <cursor>
+                                        <Cursor fx:constant="DEFAULT" />
+                                    </cursor>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>
