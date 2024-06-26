@@ -23,12 +23,12 @@ public class MakePaymentUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should bill correctly")
-    void shouldBillCorrectly() {
-        LocalDateTime tenMinuteEntryDate = LocalDateTime.now().minusMinutes(60);
+    @DisplayName("Should bill correctly regular clients")
+    void shouldBillCorrectlyRegularClients() {
+        LocalDateTime tenMinuteEntryDate = LocalDateTime.now().minusMinutes(20);
         client.setEntryDate(tenMinuteEntryDate);
         Payment payment = makePayment.payment(client, PaymentMethodEnum.CARTAO);
-        Assertions.assertEquals(18,payment.getValue());
+        Assertions.assertEquals(10,payment.getValue());
     }
 
     @Test
@@ -44,7 +44,26 @@ public class MakePaymentUseCaseTest {
     @DisplayName("Should correctly bill monthly clients")
     void shouldBillMonthlyClients() {
         Client monthlyClient = new Client(client, "Teste", "1699273342", "example@example.com","São Carlos");
-        Payment payment = makePayment.monthlyPayment(client, PaymentMethodEnum.CARTAO);
+        monthlyClient.setEntryDate(LocalDateTime.now().minusDays(15));
+        Payment payment = makePayment.monthlyPayment(monthlyClient, PaymentMethodEnum.CARTAO);
+        Assertions.assertEquals(65,payment.getValue());
+    }
+
+    @Test
+    @DisplayName("Should bill extra for late monthly clients")
+    void shouldBillExtraForLateMonthlyClients() {
+        Client monthlyClient = new Client(client, "Teste", "1699273342", "example@example.com","São Carlos");
+        monthlyClient.setEntryDate(LocalDateTime.now().minusDays(31));
+        Payment payment = makePayment.monthlyPayment(monthlyClient, PaymentMethodEnum.CARTAO);
+        Assertions.assertEquals(115,payment.getValue());
+    }
+
+    @Test
+    @DisplayName("Should return the correct payment method")
+    void shouldReturnCorrectPaymentMethod() {
+        Client monthlyClient = new Client(client, "Teste", "1699273342", "example@example.com","São Carlos");
+        monthlyClient.setEntryDate(LocalDateTime.now());
+        Payment payment = makePayment.monthlyPayment(monthlyClient, PaymentMethodEnum.CARTAO);
         Assertions.assertEquals(PaymentMethodEnum.CARTAO,payment.getPaymentMethod());
     }
 }
