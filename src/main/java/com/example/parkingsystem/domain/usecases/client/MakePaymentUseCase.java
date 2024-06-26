@@ -16,6 +16,7 @@ public class MakePaymentUseCase {
         return new Payment(value, paymentMethod);
     }
 
+
     public Payment monthlyPayment(Client client, PaymentMethodEnum paymentMethod) {
         monthlyService = new MonthlyService(client.getEntryDate(), 0);
         double value = monthlyService.calculateBilling();
