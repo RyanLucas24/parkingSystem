@@ -6,17 +6,8 @@ import java.time.LocalDateTime;
 public class MonthlyService extends Service{
     private LocalDateTime paymentDate;
     private boolean paymentChecked;
-
-    @Override
-    public double getValue() {
-        return 65;
-    }
-
-    private double getLateFee() {
-        return 50;
-    }
-      
-    public MonthlyService(double value){
+  
+    public MonthlyService(double value) {
         super(value);
     }
 

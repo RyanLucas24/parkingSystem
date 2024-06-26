@@ -3,9 +3,12 @@ package com.example.parkingsystem.application.repository.sqlite;
 import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
 import com.example.parkingsystem.domain.usecases.payment.PaymentDAO;
+import com.example.parkingsystem.domain.usecases.reports.EarningsReportUseCase;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,5 +120,36 @@ public class SqlitePaymentDAO implements PaymentDAO {
                 PaymentMethodEnum.toEnum(rs.getString("paymentMethod")),
                 LocalDateTime.parse(rs.getString("date"))
         );
+    }
+
+    public List<EarningsReportUseCase> fetchPaymentsAndVisits(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT date(date) AS Dia, " +
+                "COUNT(*) AS Numero_de_Visitas, " +
+                "SUM(value) AS Valor_Total " +
+                "FROM Payment " +
+                "WHERE date >= ? AND date <= ? " +
+                "GROUP BY date(date)";
+
+        List<EarningsReportUseCase> reports = new ArrayList<>();
+
+        try (PreparedStatement stmt = ConnectionFactory.createConnection().prepareStatement(sql)) {
+            stmt.setString(1, startDate.toString());
+            stmt.setString(2, endDate.toString());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String dia = rs.getString("Dia");
+                int numeroDeVisitas = rs.getInt("Numero_de_Visitas");
+                double valorTotal = rs.getDouble("Valor_Total");
+
+                EarningsReportUseCase report = new EarningsReportUseCase(dia, numeroDeVisitas, valorTotal);
+                reports.add(report);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL error: " + e.getMessage());
+            return null;
+        }
+
+        return reports;
     }
 }

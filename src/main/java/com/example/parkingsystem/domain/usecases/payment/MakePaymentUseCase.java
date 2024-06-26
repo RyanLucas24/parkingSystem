@@ -4,7 +4,6 @@ import com.example.parkingsystem.domain.model.client.Client;
 import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
 import com.example.parkingsystem.domain.model.service.MonthlyService;
-import com.example.parkingsystem.domain.model.service.StandardService;
 import com.example.parkingsystem.domain.model.service.Service;
 import com.example.parkingsystem.domain.usecases.client.ClientDAO;
 import com.example.parkingsystem.domain.usecases.service.MonthlyServiceDAO;
@@ -21,13 +20,7 @@ public class MakePaymentUseCase {
         this.monthlyServiceDAO = monthlyServiceDAO;
         this.clientDAO = clientDAO;
     }
-
-    public Payment payment(Client client, PaymentMethodEnum paymentMethod) {
-        service = client.getService();
-        double value = service.calculateBilling();
-        return new Payment(value, paymentMethod);
-    }
-
+  
     public boolean makePayment(Client client, PaymentMethodEnum paymentMethod) {
         Service service = client.getService();
         Payment payment = new Payment(service.calculateBilling(), paymentMethod);
