@@ -6,11 +6,22 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MonthlyService extends Service{
-    private Date paymentDate;
-    private boolean paymentChecked;
+    private LocalDateTime paymentDate;
+    private boolean paymentChecked = false;
 
     @Override
     public double calculateBilling(LocalDateTime dataInicial) {
-        return 0;
+        this.paymentChecked = true;
+        this.paymentDate = dataInicial;
+        return price();
+    }
+
+    public MonthlyService(boolean paymentChecked) {
+        this.paymentChecked = paymentChecked;
+    }
+
+    @Override
+    public double price() {
+        return 30;
     }
 }
