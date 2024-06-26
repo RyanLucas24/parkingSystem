@@ -3,7 +3,6 @@ package com.example.parkingsystem.domain.usecases.payment;
 import com.example.parkingsystem.domain.model.client.Client;
 import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
-import com.example.parkingsystem.domain.usecases.client.MakePaymentUseCase;
 import org.junit.jupiter.api.*;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 public class MakePaymentUseCaseTest {
-    private final com.example.parkingsystem.domain.usecases.client.MakePaymentUseCase makePayment = new MakePaymentUseCase();
+    private final MakePaymentUseCase makePayment = new MakePaymentUseCase();
     private final Client client = new Client("123", "a123");
 
     @Test

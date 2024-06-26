@@ -3,23 +3,23 @@ package com.example.parkingsystem.domain.usecases.payment;
 import com.example.parkingsystem.domain.model.client.Client;
 import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
+import com.example.parkingsystem.domain.model.service.MonthlyService;
+import com.example.parkingsystem.domain.model.service.StandardService;
 
 public class MakePaymentUseCase {
+    StandardService standardService;
+    MonthlyService monthlyService;
 
-    public Payment makePayment (Client client, PaymentMethodEnum paymentMethod) {
-        if (client.getEntryDate() == null) return null;
-        double pricePerMinute = 0.2;
-        double totalPaymentValue = pricePerMinute * calcularDuracao(client);
-        return new Payment(totalPaymentValue, paymentMethod);
+    public Payment payment(Client client, PaymentMethodEnum paymentMethod) {
+        standardService = new StandardService(10, 0,client.getEntryDate());
+        double value = standardService.calculateBilling();
+        return new Payment(value, paymentMethod);
     }
 
-    private double calcularDuracao(Client client) {
-        LocalDateTime dataInicial = client.getEntryDate();
-        LocalDateTime dataFinal = LocalDateTime.now();
-        Duration d = Duration.between(dataInicial, dataFinal);
-        return d.toMinutes();
+
+    public Payment monthlyPayment(Client client, PaymentMethodEnum paymentMethod) {
+        monthlyService = new MonthlyService(client.getEntryDate(), 0);
+        double value = monthlyService.calculateBilling();
+        return new Payment(value, paymentMethod);
     }
 }
