@@ -11,14 +11,14 @@ public class MakePaymentUseCase {
     MonthlyService monthlyService;
 
     public Payment payment(Client client, PaymentMethodEnum paymentMethod) {
-        standardService = new StandardService(0, client.getEntryDate());
-        double value = standardService.calculateBilling(client.getEntryDate());
+        standardService = new StandardService(10, 0,client.getEntryDate());
+        double value = standardService.calculateBilling();
         return new Payment(value, paymentMethod);
     }
 
     public Payment monthlyPayment(Client client, PaymentMethodEnum paymentMethod) {
-        monthlyService = new MonthlyService(false);
-        double value = monthlyService.calculateBilling(client.getEntryDate());
+        monthlyService = new MonthlyService(client.getEntryDate(), 0);
+        double value = monthlyService.calculateBilling();
         return new Payment(value, paymentMethod);
     }
 }
