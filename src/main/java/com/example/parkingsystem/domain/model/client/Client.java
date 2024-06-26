@@ -1,4 +1,5 @@
 package com.example.parkingsystem.domain.model.client;
+import com.example.parkingsystem.domain.model.service.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,15 @@ public class Client {
     private String address;
     private LocalDateTime entryDate;
     private List<String> vehiclesPlate = new ArrayList<>();
+    private Service service;
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     public LocalDateTime getEntryDate() {
         return entryDate;
@@ -27,6 +37,8 @@ public class Client {
         this.vehiclesPlate.add(vehiclePlate);
     }
 
+
+
     public Client(Client client, String name, String phone, String email, String address) {
         this.cpf = client.getCpf();
         this.vehiclesPlate = client.getVehiclesPlate();
@@ -38,10 +50,6 @@ public class Client {
 
     public String getCpf() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public List<String> getVehiclesPlate() {
