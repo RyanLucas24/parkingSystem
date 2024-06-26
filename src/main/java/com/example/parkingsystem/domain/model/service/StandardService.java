@@ -10,14 +10,14 @@ public class StandardService extends Service{
     private final double additionalValue;
 
     @Override
-    public double pricePerMinute(){
+    public double price(){
         return 0.3;
     }
 
     @Override
     public double calculateBilling(LocalDateTime dataInicial) {
         double minutosPermanecidos = calcularDuracao(dataInicial);
-        return (minutosPermanecidos * pricePerMinute()) + additionalValue;
+        return (minutosPermanecidos * price()) + additionalValue;
     }
 
     public StandardService(double additionalValue, LocalDateTime checkIn) {
