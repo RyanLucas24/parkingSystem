@@ -5,20 +5,18 @@ import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
 import com.example.parkingsystem.domain.model.service.MonthlyService;
 import com.example.parkingsystem.domain.model.service.Service;
-import com.example.parkingsystem.domain.model.service.StandardService;
 import com.example.parkingsystem.domain.usecases.client.ClientDAO;
-import com.example.parkingsystem.domain.usecases.service.ServiceDAO;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
+import com.example.parkingsystem.domain.usecases.service.MonthlyServiceDAO;
+import com.example.parkingsystem.domain.usecases.service.StandardServiceDAO;
 
 public class MakePaymentUseCase {
-    private ServiceDAO serviceDAO;
-    private PaymentDAO paymentDAO;
-    private ClientDAO clientDAO;
-    public MakePaymentUseCase(ServiceDAO serviceDAO, PaymentDAO paymentDAO, ClientDAO clientDAO){
+    private final MonthlyServiceDAO monthlyServiceDAO;
+    private final PaymentDAO paymentDAO;
+    private final ClientDAO clientDAO;
+
+    public MakePaymentUseCase(PaymentDAO paymentDAO, ClientDAO clientDAO, MonthlyServiceDAO monthlyServiceDAO){
         this.paymentDAO = paymentDAO;
-        this.serviceDAO = serviceDAO;
+        this.monthlyServiceDAO = monthlyServiceDAO;
         this.clientDAO = clientDAO;
     }
 
@@ -29,7 +27,7 @@ public class MakePaymentUseCase {
 
         if(service instanceof MonthlyService){
             ((MonthlyService) service).setPaymentChecked(true);
-            serviceDAO.update(service);
+            monthlyServiceDAO.update(service);
             clientDAO.update(client);
         }
         return true;

@@ -16,6 +16,13 @@ public class Payment {
         this.date = LocalDateTime.now();
     }
 
+    public Payment(int id, double value, PaymentMethodEnum paymentMethod, LocalDateTime date) {
+        this.id = id;
+        this.value = value;
+        this.paymentMethod = paymentMethod;
+        this.date = date;
+    }
+
     public double getValue() {
         return value;
     }

@@ -19,27 +19,18 @@ public class Parking {
         availableMonthlyParkingSpace = 0;
     }
 
-    public void occupyAStandardParkingSpace() {
-        if (hasAvailableStandardParkingSpace()) {
-            availableStandardParkingSpace -= 1;
-        } else throw new UnavailableParkingSpaceRequestException("Vaga padrão indisponível!!");
-    }
-
-    public void occupyAMonthlyParkingSpace() {
-        if (hasAvailableMonthlyParkingSpace()) {
-            availableMonthlyParkingSpace -= 1;
-        } else throw new UnavailableParkingSpaceRequestException("Vaga mensal indisponível!!");}
-
-    public void liberateAStandardParkingSpace() {
-        if (hasAnOccupiedStandardParkingSpace()) {
-            availableStandardParkingSpace += 1;
-        } else throw new UnavailableParkingSpaceRequestException("Total de vagas padrão liberadas alcançado!!");
-    }
-
-    public void liberateAMonthlyParkingSpace() {
-        if (hasAnOccupiedMonthlyParkingSpace()) {
-            availableMonthlyParkingSpace += 1;
-        } else throw new UnavailableParkingSpaceRequestException("Total de vagas mensais liberadas alcançado!!");
+    public Parking(int availableStandardParkingSpace,
+                   int parkingSpace,
+                   int availableMonthlyParkingSpace,
+                   int standardParkingSpace,
+                   int monthlyParkingSpace,
+                   int id) {
+        this.availableStandardParkingSpace = availableStandardParkingSpace;
+        this.availableMonthlyParkingSpace = availableMonthlyParkingSpace;
+        this.parkingSpace = parkingSpace;
+        this.standardParkingSpace = standardParkingSpace;
+        this.monthlyParkingSpace = monthlyParkingSpace;
+        this.id = id;
     }
 
     public boolean hasAnOccupiedStandardParkingSpace() {
@@ -86,18 +77,20 @@ public class Parking {
         return monthlyParkingSpace;
     }
 
-    public void setMonthlyParkingSpace(int newMonthlyParkingSpace) {
-        if (newMonthlyParkingSpace > monthlyParkingSpace + availableStandardParkingSpace){
-            throw new UnavailableParkingSpaceRequestException(
-                    "Valor está acima da quantidade de vagas disponíveis do estacionamento!");}
+    public void setAvailableStandardParkingSpace(int availableStandardParkingSpace) {
+        this.availableStandardParkingSpace = availableStandardParkingSpace;
+    }
 
-        int occupiedStandardParkingSpace = getUnavailableStandardParkingSpace();
-        int occupiedMonthlyParkingSpace = getUnavailableMonthlyParkingSpace();
+    public void setAvailableMonthlyParkingSpace(int availableMonthlyParkingSpace) {
+        this.availableMonthlyParkingSpace = availableMonthlyParkingSpace;
+    }
 
-        monthlyParkingSpace = newMonthlyParkingSpace;
-        standardParkingSpace = parkingSpace - monthlyParkingSpace;
-        availableStandardParkingSpace = standardParkingSpace - occupiedStandardParkingSpace;
-        availableMonthlyParkingSpace = monthlyParkingSpace - occupiedMonthlyParkingSpace;
+    public void setStandardParkingSpace(int standardParkingSpace) {
+        this.standardParkingSpace = standardParkingSpace;
+    }
+
+    public void setMonthlyParkingSpace(int monthlyParkingSpace) {
+        this.monthlyParkingSpace = monthlyParkingSpace;
     }
 
     public int getId() {
@@ -118,5 +111,4 @@ public class Parking {
                 "\nVagas padrão livres: " + availableStandardParkingSpace +
                 "\nVagas padrão ocupadas: " + getUnavailableStandardParkingSpace();
     }
-
 }
