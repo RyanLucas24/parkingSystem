@@ -8,25 +8,22 @@ public class StandardService extends Service{
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
 
+    @Override
+    public double getValue() {
+        return 1; // preco por minuto
+    }
 
-    public StandardService(double value, double time, double toleranceTime, double additionalValue, LocalDateTime checkOut) {
-        super(value, time, toleranceTime);
+    public StandardService(double toleranceTime, double additionalValue, LocalDateTime checkIn) {
+        super(toleranceTime);
         this.additionalValue = additionalValue;
-        checkIn = LocalDateTime.now();
-        this.checkOut = checkOut;
+        this.checkOut = LocalDateTime.now();
+        this.checkIn = checkIn;
     }
 
     @Override
-    public void calculateBilling() {
-        Duration duration = Duration.between(checkIn, checkOut);
-        double hours = duration.toHours();
-        double cost = hours * getValue();
-
-        if (hours > getTime() + getToleranceTime()) {
-            cost += additionalValue;
-        }
-
-        return cost;
+    public double calculateBilling() {
+        double minutosPermanecidos = calcularDuracao(this.checkIn);
+        return ((minutosPermanecidos - toleranceTime) * getValue()) + additionalValue;
     }
 
     public LocalDateTime getCheckOut() {
@@ -53,5 +50,10 @@ public class StandardService extends Service{
         this.additionalValue = additionalValue;
     }
 
+    private double calcularDuracao(LocalDateTime dataInicial) {
+        LocalDateTime dataFinal = LocalDateTime.now();
+        Duration d = Duration.between(dataInicial, dataFinal);
+        return d.toMinutes();
+    }
 
 }
