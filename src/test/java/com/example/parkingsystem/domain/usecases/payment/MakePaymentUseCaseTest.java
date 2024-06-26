@@ -39,4 +39,12 @@ public class MakePaymentUseCaseTest {
         Payment payment = makePayment.payment(client, PaymentMethodEnum.CARTAO);
         Assertions.assertEquals( PaymentMethodEnum.CARTAO,payment.getPaymentMethod());
     }
+
+    @Test
+    @DisplayName("Should correctly bill monthly clients")
+    void shouldBillMonthlyClients() {
+        Client monthlyClient = new Client(client, "Teste", "1699273342", "example@example.com","São Carlos");
+        Payment payment = makePayment.monthlyPayment(client, PaymentMethodEnum.CARTAO);
+        Assertions.assertEquals(PaymentMethodEnum.CARTAO,payment.getPaymentMethod());
+    }
 }
