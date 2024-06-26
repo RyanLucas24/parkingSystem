@@ -1,5 +1,6 @@
 package com.example.parkingsystem.domain.model.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class MonthlyService extends Service{
@@ -19,6 +20,16 @@ public class MonthlyService extends Service{
         super(toleranceTime);
         this.paymentChecked = false;
         this.paymentDate = paymentDate;
+      
+    public MonthlyService(double value) {
+        super(value);
+    }
+
+    public MonthlyService(int id, double value, LocalDateTime paymentDate, boolean paymentChecked) {
+        super(id, value);
+        this.paymentDate = paymentDate;
+        this.paymentChecked = paymentChecked;
+      
     }
 
     @Override
@@ -32,6 +43,7 @@ public class MonthlyService extends Service{
             setPaymentChecked(true);
             return cost;
         }
+        return value;
     }
 
     public LocalDateTime getPaymentDate() {
@@ -46,7 +58,14 @@ public class MonthlyService extends Service{
         this.paymentChecked = paymentChecked;
     }
 
-    public boolean isPaymentChecked() {
+    public boolean isPaymentChecked(){
+        if(paymentDate == null){
+            return false;
+        }
+        Duration between = Duration.between(paymentDate, LocalDateTime.now());
+        if(between.toDays() > 30)
+            paymentChecked = false;
         return paymentChecked;
     }
+
 }
