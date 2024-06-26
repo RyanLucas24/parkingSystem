@@ -1,22 +1,30 @@
 package com.example.parkingsystem.domain.usecases.reports;
 
-import com.example.parkingsystem.domain.model.client.Client;
-import com.example.parkingsystem.domain.usecases.client.ClientDAO;
-import com.example.parkingsystem.domain.usecases.payment.PaymentDAO;
-
-import java.util.List;
-import java.util.Optional;
-
 public class EarningsReportUseCase {
-    PaymentDAO paymentDAO;
+    private String day;
+    private int visitCount;
+    private double totalValue;
 
-    private String relatorioDePagamento() {
-        paymentDAO.readAll();
-        return "";
+    public EarningsReportUseCase(String day, int visitCount, double totalValue) {
+        this.day = day;
+        this.visitCount = visitCount;
+        this.totalValue = totalValue;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public int getVisitCount() {
+        return visitCount;
+    }
+
+    public double getTotalValue() {
+        return totalValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Dia: " + day + ", Número de Visitas: " + visitCount + ", Valor Total: $" + totalValue;
     }
 }
-
-
-//O sistema deve permitir que o gerente selecione um determinado período de
-// tempo e deve ser gerado uma visualização de quanto foi o valor adquirido
-// e quantas visitas foram realizadas por dia nesse período.
