@@ -13,12 +13,24 @@ public class StandardService extends Service{
     private LocalDateTime checkOut;
 
 
-    public StandardService(double value, double time, double toleranceTime, double additionalValue, LocalDateTime checkOut) {
+    public StandardService(double value, double time, double toleranceTime,
+                           double additionalValue, LocalDateTime checkOut) {
         super(value);
         this.time = time;
         this.toleranceTime = toleranceTime;
         this.additionalValue = additionalValue;
         checkIn = LocalDateTime.now();
+        this.checkOut = checkOut;
+    }
+
+    public StandardService(int id, double value, double time,
+                           double toleranceTime, double additionalValue,
+                           LocalDateTime checkIn, LocalDateTime checkOut) {
+        super(id, value);
+        this.time = time;
+        this.toleranceTime = toleranceTime;
+        this.additionalValue = additionalValue;
+        this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
 

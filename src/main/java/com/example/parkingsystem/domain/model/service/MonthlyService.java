@@ -11,6 +11,12 @@ public class MonthlyService extends Service{
         super(value);
     }
 
+    public MonthlyService(int id, double value, LocalDateTime paymentDate, boolean paymentChecked) {
+        super(id, value);
+        this.paymentDate = paymentDate;
+        this.paymentChecked = paymentChecked;
+    }
+
     @Override
     public double calculateBilling() {
         return value;

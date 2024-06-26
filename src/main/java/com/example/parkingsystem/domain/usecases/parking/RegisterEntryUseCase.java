@@ -10,22 +10,26 @@ import com.example.parkingsystem.domain.usecases.client.ClientBasicInformationIn
 import com.example.parkingsystem.domain.usecases.client.ClientCompleteInformationInputRequestValidator;
 import com.example.parkingsystem.domain.usecases.client.ClientDAO;
 import com.example.parkingsystem.domain.usecases.payment.MakePaymentUseCase;
-import com.example.parkingsystem.domain.usecases.service.ServiceDAO;
+import com.example.parkingsystem.domain.usecases.service.MonthlyServiceDAO;
+import com.example.parkingsystem.domain.usecases.service.StandardServiceDAO;
 import com.example.parkingsystem.domain.usecases.utils.EntityNotFoundException;
 import com.example.parkingsystem.domain.usecases.utils.Notification;
 import com.example.parkingsystem.domain.usecases.utils.Validator;
 
-import java.util.List;
 import java.util.Optional;
 
 public class RegisterEntryUseCase {
     private final ClientDAO clientDAO;
-    private final ServiceDAO serviceDAO;
+    private final StandardServiceDAO standardServiceDAO;
+    private final MonthlyServiceDAO monthlyServiceDAO;
+
     private final ParkingDAO parkingDAO;
 
-    public RegisterEntryUseCase(ClientDAO clientDAO, ServiceDAO serviceDAO, ParkingDAO parkingDAO) {
+    public RegisterEntryUseCase(ClientDAO clientDAO, StandardServiceDAO standardServiceDAO,
+                                ParkingDAO parkingDAO, MonthlyServiceDAO monthlyServiceDAO) {
         this.clientDAO = clientDAO;
-        this.serviceDAO = serviceDAO;
+        this.standardServiceDAO = standardServiceDAO;
+        this.monthlyServiceDAO = monthlyServiceDAO;
         this.parkingDAO = parkingDAO;
     }
 
@@ -37,23 +41,11 @@ public class RegisterEntryUseCase {
 
         Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
 
-        if (clientOptional.isPresent()) {
-            Client clientFound = clientOptional.get();
-            List<String> vehiclesPlate = clientFound.getVehiclesPlate();
+        return clientOptional.orElseGet(() -> clientDAO.create(client));
 
-            List<String> differencesCollected = client.getVehiclesPlate()
-                    .stream()
-                    .filter(vp -> !vehiclesPlate.contains(vp))
-                    .toList();
-
-            clientFound.getVehiclesPlate().addAll(differencesCollected);
-            return clientFound;
-        }
-
-        return clientDAO.create(client);
     }
 
-    public boolean chooseAService(Client client, Service service) {
+    public boolean chooseAMonthlyService(Client client, Service service) {
         client.setService(service);
         Validator<Client> validator = new ClientCompleteInformationInputRequestValidator();
         Notification notification = validator.validate(client);
@@ -61,11 +53,28 @@ public class RegisterEntryUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
 
         Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
+
         if (clientOptional.isPresent()) {
-            serviceDAO.create(service);
+            monthlyServiceDAO.create(service);
             return clientDAO.update(client);
         } else throw new EntityNotFoundException("Cliente não existente com o CPF: " + client.getCpf());
     }
+
+    public boolean chooseAStandardService(Client client, Service service) {
+        client.setService(service);
+        Validator<Client> validator = new ClientCompleteInformationInputRequestValidator();
+        Notification notification = validator.validate(client);
+        if (notification.hasErrors())
+            throw new IllegalArgumentException(notification.errorMessage());
+
+        Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
+
+        if (clientOptional.isPresent()) {
+            standardServiceDAO.create(service);
+            return clientDAO.update(client);
+        } else throw new EntityNotFoundException("Cliente não existente com o CPF: " + client.getCpf());
+    }
+
 
     private boolean isClientReadyToEnter(Service service) {
         if (service instanceof StandardService)
@@ -73,14 +82,15 @@ public class RegisterEntryUseCase {
         return ((MonthlyService) service).isPaymentChecked();
     }
 
-    public void liberateAccess(Client client, Parking parking, MakePaymentUseCase useCase) {
+    public void liberateAccess(Client client, Parking parking, MakePaymentUseCase makePaymentUseCase,
+                               ManageParkingSpaceUseCase manageParkingSpaceUseCase) {
         Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
-        if(clientOptional.isEmpty()){
+        if (clientOptional.isEmpty()) {
             throw new EntityNotFoundException("Cliente não encontrado");
         }
         if (!isClientReadyToEnter(client.getService()))
-            useCase.makePayment(client, PaymentMethodEnum.PIX);
-        parking.occupyAMonthlyParkingSpace();
+            makePaymentUseCase.makePayment(client, PaymentMethodEnum.PIX);
+        manageParkingSpaceUseCase.occupyAMonthlyParkingSpace(parking);
         parkingDAO.update(parking);
         System.out.println("Acesso Liberado Com Sucesso!!");
     }

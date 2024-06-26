@@ -1,11 +1,11 @@
-package com.example.parkingsystem.application.repository;
+package com.example.parkingsystem.application.repository.inmemory;
 
 import com.example.parkingsystem.domain.model.service.Service;
-import com.example.parkingsystem.domain.usecases.service.ServiceDAO;
+import com.example.parkingsystem.domain.usecases.service.StandardServiceDAO;
 
 import java.util.*;
 
-public class inMemoryServiceDAO implements ServiceDAO {
+public class inMemoryServiceDAO implements StandardServiceDAO {
     private static final Map<Integer, Service> db = new LinkedHashMap<>();
     private static int idCounter;
 

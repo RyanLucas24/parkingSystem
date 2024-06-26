@@ -5,10 +5,14 @@ public abstract class Service {
     protected int id;
     protected double value;
 
-
     public abstract double calculateBilling();
 
     public Service(double value) {
+        this.value = value;
+    }
+
+    public Service(int id, double value) {
+        this.id = id;
         this.value = value;
     }
 
