@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface DAO <T, K>{
     T create(T type);
 
-    List<K> readAll();
+    List<T> readAll();
 
     Optional<T> findOne(K key);
 

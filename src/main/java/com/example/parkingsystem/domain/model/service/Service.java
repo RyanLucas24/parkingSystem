@@ -1,27 +1,30 @@
 package com.example.parkingsystem.domain.model.service;
 
 public abstract class Service {
-    protected double value;
-    protected double time;
-    protected double toleranceTime;
 
+    protected int id;
+    protected double value;
 
     public abstract double calculateBilling();
 
-    public Service(double toleranceTime) {
-        this.toleranceTime = toleranceTime;
+    public Service(double value) {
+        this.value = value;
+    }
+
+    public Service(int id, double value) {
+        this.id = id;
+        this.value = value;
     }
 
     public double getValue() {
         return value;
     }
 
-    public double getTime() {
-        return time;
+    public int getId() {
+        return id;
     }
 
-    public double getToleranceTime() {
-        return toleranceTime;
+    public void setId(int id) {
+        this.id = id;
     }
-
 }
