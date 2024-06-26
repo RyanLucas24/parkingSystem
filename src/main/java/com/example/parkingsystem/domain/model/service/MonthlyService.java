@@ -5,25 +5,32 @@ import java.time.LocalDateTime;
 public class MonthlyService extends Service{
     private LocalDateTime paymentDate;
     private boolean paymentChecked;
-    private final double lateFee = 50;// Substitua 50 pelo valor da taxa de atraso
 
-    public MonthlyService(double value, double time, double toleranceTime) {
-        super(value, time, toleranceTime);
+    @Override
+    public double getValue() {
+        return 65;
+    }
+
+    private double getLateFee() {
+        return 50;
+    }
+
+    public MonthlyService(LocalDateTime paymentDate, double toleranceTime) {
+        super(toleranceTime);
+        this.paymentChecked = false;
+        this.paymentDate = paymentDate;
     }
 
     @Override
-    public void calculateBilling() {
+    public double calculateBilling() {
         double cost = getValue();
-
-        // Verifique se a data atual é superior a um mês após a data de pagamento
+        double lateFee = getLateFee();
         if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
             setPaymentChecked(false);
-//            throw new IllegalArgumentException("Pagamento não efetuado");
-            // Adicione uma taxa de atraso ao custo
-            //cost += lateFee;
+            return cost + lateFee;
         } else {
             setPaymentChecked(true);
-//            throw new IllegalArgumentException("Pagamento efetuado");
+            return cost;
         }
     }
 
