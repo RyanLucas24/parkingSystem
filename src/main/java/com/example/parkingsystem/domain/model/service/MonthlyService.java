@@ -1,31 +1,42 @@
 package com.example.parkingsystem.domain.model.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class MonthlyService extends Service{
     private LocalDateTime paymentDate;
     private boolean paymentChecked;
 
-    public MonthlyService(double value, double time, double toleranceTime) {
-        super(value, time, toleranceTime);
+    @Override
+    public double getValue() {
+        return 65;
+    }
+
+    private double getLateFee() {
+        return 50;
+    }
+      
+    public MonthlyService(double value){
+        super(value);
+    }
+
+    public MonthlyService(int id, double value, LocalDateTime paymentDate, boolean paymentChecked) {
+        super(id, value);
+        this.paymentDate = paymentDate;
+        this.paymentChecked = paymentChecked;
     }
 
     @Override
     public double calculateBilling() {
         double cost = getValue();
-
-        // Verifique se a data atual é superior a um mês após a data de pagamento
+        double lateFee = getLateFee();
         if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
             setPaymentChecked(false);
-//            throw new IllegalArgumentException("Pagamento não efetuado");
-            // Adicione uma taxa de atraso ao custo (Serviço mensal não cobra taxa adicional)
-            // Cobrar +1 mês;
+            return cost + lateFee;
         } else {
             setPaymentChecked(true);
-//            throw new IllegalArgumentException("Pagamento efetuado");
+            return cost;
         }
-        // temp
-        return cost;
     }
 
     public LocalDateTime getPaymentDate() {
@@ -40,7 +51,14 @@ public class MonthlyService extends Service{
         this.paymentChecked = paymentChecked;
     }
 
-    public boolean isPaymentChecked() {
+    public boolean isPaymentChecked(){
+        if(paymentDate == null){
+            return false;
+        }
+        Duration between = Duration.between(paymentDate, LocalDateTime.now());
+        if(between.toDays() > 30)
+            paymentChecked = false;
         return paymentChecked;
     }
+
 }

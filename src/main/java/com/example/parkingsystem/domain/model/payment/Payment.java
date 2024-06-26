@@ -3,7 +3,10 @@ package com.example.parkingsystem.domain.model.payment;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+
 public class Payment {
+
+    private int id;
     private double value;
     private PaymentMethodEnum paymentMethod;
     private LocalDateTime date;
@@ -12,6 +15,13 @@ public class Payment {
         this.value = value;
         this.paymentMethod = paymentMethod;
         this.date = LocalDateTime.now();
+    }
+
+    public Payment(int id, double value, PaymentMethodEnum paymentMethod, LocalDateTime date) {
+        this.id = id;
+        this.value = value;
+        this.paymentMethod = paymentMethod;
+        this.date = date;
     }
 
     public double getValue() {
@@ -36,5 +46,13 @@ public class Payment {
 
     public void setDate(Date date) {
         this.date = LocalDateTime.now();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
