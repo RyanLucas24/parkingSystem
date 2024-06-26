@@ -2,9 +2,6 @@
 package com.example.parkingsystem;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
