@@ -55,7 +55,7 @@ public class DatabaseBuilder {
         builder.append("    id INTEGER PRIMARY KEY AUTOINCREMENT, \n");
         builder.append("    value REAL NOT NULL, \n");
         builder.append("    paymentDate TEXT, \n");
-        builder.append("    paymentChecked BOOLEAN, \n");
+        builder.append("    paymentChecked BOOLEAN \n");
         builder.append("); \n");
 
         System.out.println(builder);

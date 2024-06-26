@@ -17,16 +17,13 @@ public class StandardService extends Service{
         return 1; // preco por minuto
     }
 
-    public StandardService(double toleranceTime, double additionalValue, LocalDateTime checkIn) {
-        super(toleranceTime);
     public StandardService(double value, double time, double toleranceTime,
                            double additionalValue, LocalDateTime checkOut) {
         super(value);
         this.time = time;
         this.toleranceTime = toleranceTime;
         this.additionalValue = additionalValue;
-        this.checkOut = LocalDateTime.now();
-        this.checkIn = checkIn;
+        this.checkIn = checkOut;
     }
 
     public StandardService(int id, double value, double time,
@@ -44,15 +41,6 @@ public class StandardService extends Service{
     public double calculateBilling() {
         double minutosPermanecidos = calcularDuracao(this.checkIn);
         return ((minutosPermanecidos - toleranceTime) * getValue()) + additionalValue;
-        Duration duration = Duration.between(checkIn, checkOut);
-        double hours = duration.toHours();
-        double cost = hours * getValue();
-
-        AdditionalCostUseCase additionalCostUseCase = new AdditionalCostUseCase();
-
-        cost += additionalCostUseCase.calculateAdditionalCost(additionalValue, hours, toleranceTime);
-
-        return cost;
     }
 
     public LocalDateTime getCheckOut() {
@@ -83,7 +71,9 @@ public class StandardService extends Service{
         LocalDateTime dataFinal = LocalDateTime.now();
         Duration d = Duration.between(dataInicial, dataFinal);
         return d.toMinutes();
-    public double getTime() {
+    }
+
+    public double getTime(){
         return time;
     }
 
@@ -99,3 +89,4 @@ public class StandardService extends Service{
         this.toleranceTime = toleranceTime;
     }
 }
+
