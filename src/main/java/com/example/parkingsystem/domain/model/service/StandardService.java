@@ -36,15 +36,8 @@ public class StandardService extends Service{
 
     @Override
     public double calculateBilling() {
-        Duration duration = Duration.between(checkIn, checkOut);
-        double hours = duration.toHours();
-        double cost = hours * getValue();
-
-        AdditionalCostUseCase additionalCostUseCase = new AdditionalCostUseCase();
-
-        cost += additionalCostUseCase.calculateAdditionalCost(additionalValue, hours, toleranceTime);
-
-        return cost;
+        double minutosPermanecidos = calcularDuracao(this.checkIn);
+        return ((minutosPermanecidos - toleranceTime) * getValue()) + additionalValue;
     }
 
     public LocalDateTime getCheckOut() {
@@ -71,7 +64,14 @@ public class StandardService extends Service{
         this.additionalValue = additionalValue;
     }
 
-    public double getTime() {
+
+    private double calcularDuracao(LocalDateTime dataInicial) {
+        LocalDateTime dataFinal = LocalDateTime.now();
+        Duration d = Duration.between(dataInicial, dataFinal);
+        return d.toMinutes();
+    }
+
+    public double getTime(){
         return time;
     }
 
@@ -87,3 +87,4 @@ public class StandardService extends Service{
         this.toleranceTime = toleranceTime;
     }
 }
+

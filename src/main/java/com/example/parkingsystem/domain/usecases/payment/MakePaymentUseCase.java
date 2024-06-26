@@ -10,6 +10,7 @@ import com.example.parkingsystem.domain.usecases.service.MonthlyServiceDAO;
 import com.example.parkingsystem.domain.usecases.service.StandardServiceDAO;
 
 public class MakePaymentUseCase {
+    private Service service;
     private final MonthlyServiceDAO monthlyServiceDAO;
     private final PaymentDAO paymentDAO;
     private final ClientDAO clientDAO;
@@ -19,7 +20,7 @@ public class MakePaymentUseCase {
         this.monthlyServiceDAO = monthlyServiceDAO;
         this.clientDAO = clientDAO;
     }
-
+  
     public boolean makePayment(Client client, PaymentMethodEnum paymentMethod) {
         Service service = client.getService();
         Payment payment = new Payment(service.calculateBilling(), paymentMethod);

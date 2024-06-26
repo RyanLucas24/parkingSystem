@@ -2,6 +2,7 @@ package com.example.parkingsystem.domain.model.client;
 
 import com.example.parkingsystem.domain.model.service.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Client {
@@ -13,6 +14,8 @@ public class Client {
     private String address;
     private final String vehiclePlate;
     private Service service;
+
+    private LocalDateTime entryDate;
 
     public Client(String cpf, String vehiclePlate) {
         this.cpf = cpf;
@@ -85,5 +88,12 @@ public class Client {
         this.id = id;
     }
 
+    public void setEntryDate(LocalDateTime entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public LocalDateTime getEntryDate() {
+        return entryDate;
+    }
 }
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class MonthlyService extends Service{
     private LocalDateTime paymentDate;
     private boolean paymentChecked;
-
+  
     public MonthlyService(double value) {
         super(value);
     }
@@ -19,7 +19,15 @@ public class MonthlyService extends Service{
 
     @Override
     public double calculateBilling() {
-        return value;
+        double cost = getValue();
+        double lateFee = getLateFee();
+        if (paymentDate.plusMonths(1).isBefore(LocalDateTime.now())) {
+            setPaymentChecked(false);
+            return cost + lateFee;
+        } else {
+            setPaymentChecked(true);
+            return cost;
+        }
     }
 
     public LocalDateTime getPaymentDate() {
