@@ -15,13 +15,8 @@ public class MonthlyService extends Service{
     private double getLateFee() {
         return 50;
     }
-
-    public MonthlyService(LocalDateTime paymentDate, double toleranceTime) {
-        super(toleranceTime);
-        this.paymentChecked = false;
-        this.paymentDate = paymentDate;
       
-    public MonthlyService(double value) {
+    public MonthlyService(double value){
         super(value);
     }
 
@@ -29,7 +24,6 @@ public class MonthlyService extends Service{
         super(id, value);
         this.paymentDate = paymentDate;
         this.paymentChecked = paymentChecked;
-      
     }
 
     @Override
@@ -43,7 +37,6 @@ public class MonthlyService extends Service{
             setPaymentChecked(true);
             return cost;
         }
-        return value;
     }
 
     public LocalDateTime getPaymentDate() {
