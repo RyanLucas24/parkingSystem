@@ -5,9 +5,6 @@ import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
 import com.example.parkingsystem.domain.model.service.StandardService;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 public class MakePaymentUseCase {
     StandardService standardService;
 
