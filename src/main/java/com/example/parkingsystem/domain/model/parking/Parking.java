@@ -108,5 +108,4 @@ public class Parking {
                 "\nVagas padrão livres: " + availableStandardParkingSpace +
                 "\nVagas padrão ocupadas: " + getUnavailableStandardParkingSpace();
     }
-
 }
