@@ -8,7 +8,7 @@ public abstract class Service {
 
     public abstract double calculateBilling(LocalDateTime dataInicial);
 
-    public double pricePerMinute() {
+    public double price() {
         return 0;
     }
 }
