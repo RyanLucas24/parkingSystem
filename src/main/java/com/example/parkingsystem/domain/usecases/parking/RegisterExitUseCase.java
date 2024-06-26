@@ -1,66 +1,62 @@
 package com.example.parkingsystem.domain.usecases.parking;
 
+import com.example.parkingsystem.domain.model.client.Client;
+import com.example.parkingsystem.domain.model.payment.PaymentMethodEnum;
 import com.example.parkingsystem.domain.model.parking.Parking;
+import com.example.parkingsystem.domain.model.service.MonthlyService;
+import com.example.parkingsystem.domain.model.service.Service;
+import com.example.parkingsystem.domain.model.service.StandardService;
 import com.example.parkingsystem.domain.usecases.client.ClientDAO;
+import com.example.parkingsystem.domain.usecases.payment.MakePaymentUseCase;
+import com.example.parkingsystem.domain.usecases.utils.EntityNotFoundException;
+import com.example.parkingsystem.domain.usecases.utils.UnavailableParkingSpaceRequestException;
+
+import java.util.Optional;
 
 public class RegisterExitUseCase {
+    private final ClientDAO clientDAO;
+    private final ParkingDAO parkingDAO;
 
-    private ParkingDAO parkingDAO;
-    private ClientDAO clientDAO;
-    private Parking parking;
-    private boolean paymentChecked;
-
-    public RegisterExitUseCase(ClientDAO clientDAO) {
-        this.parkingDAO = parkingDAO;
+    public RegisterExitUseCase(ClientDAO clientDAO, ParkingDAO parkingDAO) {
         this.clientDAO = clientDAO;
+        this.parkingDAO = parkingDAO;
     }
 
-//    public Client getClientByCpf(String cpf){
-//        Optional<Client> clientOptional = clientDAO.findOne(cpf);
-//        if(clientOptional.isEmpty()) {
-//            throw new IllegalArgumentException("Cliente não encontrado");
-//        }
-//
-//        Client clientFound = clientOptional.get();
-//        MonthlyService monthlyService = (MonthlyService) clientFound.getService();
-//        StandardService standardService = (StandardService) clientFound.getService();
-//
-////        switch (clientFound.getService()) {
-//            // case "standard": // TODO - Refatorar para usar o enum ou trocar para string
-//                // Chama o cálculo de valor do pagamento para serviço standard
-////                standardService.setCheckOut(LocalDateTime.now());
-////                standardService.calculateBilling();
-////                setPaymentChecked(true);
-////                if (isPaymentChecked()) {
-////                    // Libera a vaga e o cliente
-////                    parking.liberateAStandardParkingSpace();
-////                } else {
-////                    throw new IllegalArgumentException("Pagamento não efetuado");
-////                }
-////                break;
-//            // fluxo alternativo 1
-//            // case "monthly": // TODO - Refatorar para usar o enum ou trocar para string
-////                if (monthlyService.isPaymentChecked()) {
-////                    // Libera a vaga e o cliente
-////                    parking.liberateAMonthlyParkingSpace();
-////                } else {
-////                    throw new IllegalArgumentException("Pagamento não efetuado");
-////                }
-////                break;
-////
-////            default:
-////                throw new IllegalArgumentException("Tipo de serviço inválido");
-////        }
-//
-////        return clientFound; // TODO - Verificar se é necessário retornar o cliente
-//    }
+    public void registerExit(Client client, Parking parking, MakePaymentUseCase paymentUseCase, ManageParkingSpaceUseCase manageParkingSpaceUseCase) {
+        Optional<Client> clientOptional = clientDAO.findOne(client.getCpf());
+        if (clientOptional.isEmpty()) {
+            throw new EntityNotFoundException("Cliente não encontrado");
+        }
 
-    public boolean isPaymentChecked() {
-        return paymentChecked;
+        Service clientService = client.getService();
+        double totalCost = calculatePayment(clientService);
+
+        boolean paymentSuccessful = paymentUseCase.makePayment(client, PaymentMethodEnum.PIX);
+
+        if (paymentSuccessful) {
+            try {
+                if (clientService instanceof StandardService) {
+                    manageParkingSpaceUseCase.liberateAStandardParkingSpace(parking);
+                } else if (clientService instanceof MonthlyService) {
+                    manageParkingSpaceUseCase.liberateAMonthlyParkingSpace(parking);
+                }
+                parkingDAO.update(parking);
+                System.out.println("Saída registrada com sucesso!");
+            } catch (UnavailableParkingSpaceRequestException e) {
+                throw new IllegalArgumentException("Erro ao liberar vaga no estacionamento.");
+            }
+        } else {
+            throw new IllegalArgumentException("Pagamento não foi realizado com sucesso.");
+        }
     }
 
-    public void setPaymentChecked(boolean paymentChecked) {
-        this.paymentChecked = paymentChecked;
+    private double calculatePayment(Service service) {
+        if (service instanceof StandardService) {
+            return 20.0; // chamar calculo
+        } else if (service instanceof MonthlyService) {
+            return 0.0; // cliente mensal n paga na saída
+        } else {
+            throw new IllegalArgumentException("Serviço inválido!");
+        }
     }
-
 }

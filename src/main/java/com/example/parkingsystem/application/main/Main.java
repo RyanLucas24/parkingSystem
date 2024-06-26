@@ -40,7 +40,7 @@ public class Main {
         MonthlyServiceDAO monthlyServiceDAO = new SqliteMonthlyServiceDAO();
 
         registerEntryUseCase = new RegisterEntryUseCase(clientDAO, standardServiceDAO, parkingDAO, monthlyServiceDAO);
-        registerExitUseCase = new RegisterExitUseCase(clientDAO);
+        registerExitUseCase = new RegisterExitUseCase(clientDAO, parkingDAO);
         makePaymentUseCase =new MakePaymentUseCase(paymentDAO, clientDAO, monthlyServiceDAO);
         manageParkingSpaceUseCase = new ManageParkingSpaceUseCase(parkingDAO);
     }
