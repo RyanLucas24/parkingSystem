@@ -7,6 +7,9 @@ public abstract class Service {
 
     public abstract double calculateBilling();
 
+    public Service(double toleranceTime) {
+        this.toleranceTime = toleranceTime;
+      
     public Service(double value) {
         this.value = value;
     }

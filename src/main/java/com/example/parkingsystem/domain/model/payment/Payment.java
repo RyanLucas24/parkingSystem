@@ -3,6 +3,7 @@ package com.example.parkingsystem.domain.model.payment;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+
 public class Payment {
 
     private int id;
