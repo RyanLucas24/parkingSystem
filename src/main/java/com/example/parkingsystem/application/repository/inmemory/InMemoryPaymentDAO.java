@@ -1,6 +1,5 @@
-package com.example.parkingsystem.application.repository;
+package com.example.parkingsystem.application.repository.inmemory;
 
-import com.example.parkingsystem.domain.model.client.Client;
 import com.example.parkingsystem.domain.model.payment.Payment;
 import com.example.parkingsystem.domain.usecases.payment.PaymentDAO;
 

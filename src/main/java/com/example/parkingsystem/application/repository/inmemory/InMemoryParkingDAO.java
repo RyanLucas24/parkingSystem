@@ -1,7 +1,6 @@
-package com.example.parkingsystem.application.repository;
+package com.example.parkingsystem.application.repository.inmemory;
 
 import com.example.parkingsystem.domain.model.parking.Parking;
-import com.example.parkingsystem.domain.model.service.Service;
 import com.example.parkingsystem.domain.usecases.parking.ParkingDAO;
 
 import java.util.*;
